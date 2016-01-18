@@ -37,6 +37,15 @@ function mirage_poller_output ($rrd_update_array) {
 		$log_filetype = ".log"; 
 	}
 	
+    $mirage_log_type = read_config_option('mirage_log_type');
+
+    if($mirage_log_type == 'kv') {
+        mirage_kv_output($rrd_update_array);
+    }
+    return $rrd_update_array;
+}
+
+function mirage_kv_output(&$rrd_update_array) {
 	/* mirage rotation setting */
 	$log_rotation = FALSE;
 	if(read_config_option('mirage_rotation') == 'on') {
@@ -49,8 +58,7 @@ function mirage_poller_output ($rrd_update_array) {
 	if(read_config_option('mirage_log_path') != '' && read_config_option('mirage_log_filename') != '' && read_config_option('mirage_log_type') != '') {
 		$mirage_log_path = read_config_option('mirage_log_path');
 		$mirage_log_filename = read_config_option('mirage_log_filename');
-		//$log_filetype = read_config_option('mirage_log_type');
-		$mirage_log = $mirage_log_path . $mirage_log_filename . $log_filetype;
+		$mirage_log = $mirage_log_path . $mirage_log_filename;
 	} else {
 		// default if not set in settings
 		$mirage_log = $config['base_path'] . '/log/mirage_poller_output.log';
@@ -96,17 +104,18 @@ function mirage_poller_output ($rrd_update_array) {
 		file_put_contents($mirage_log,$filedata,FILE_APPEND);
 	}
 	
-    // Orignal code to generate mirror table in mysql.  Removed for file updating
-	/* Copy values from rrd_update_array into mirage_data TABLE*/
-	//file_put_contents("/tmp/cacti","output=".$m_output.",time=".$m_time.",local_data_id=".$m_local_data_id.",rrd_path=\"".$m_rrd_path."\",rrdname=\"".$m_rrd_name."\",rrd_num=".$m_rrd_num."\n",FILE_APPEND);
-	/*if(is_numeric($m_output) {
-		$sql_insert = 
-			"INSERT INTO mirage_data (output, time, local_data_id, rrd_path, rrd_name, rrd_num)
-			 VALUES (".$m_output.",".$m_time.",".$_local_data_id.",'".$m_rrd_path."','".$m_rrd_name."','".$m_rrd_num."')";
-		db_execute($sql_insert);
-	}*/
-	
 	return $rrd_update_array;
+}
+
+function mirage_sql_output(&$rrd_update_array) {
+    //TODO: not implemented
+    /* Copy values from rrd_update_array into mirage_data TABLE*/
+    /*if(is_numeric($m_output) {
+        $sql_insert = 
+        "INSERT INTO mirage_data (output, time, local_data_id, rrd_path, rrd_name, rrd_num)
+         VALUES (".$m_output.",".$m_time.",".$_local_data_id.",'".$m_rrd_path."','".$m_rrd_name."','".$m_rrd_num."')";
+        db_execute($sql_insert);
+    }*/
 }
 
 ?>
