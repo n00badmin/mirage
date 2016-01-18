@@ -47,6 +47,7 @@ function mirage_poller_output ($rrd_update_array) {
 }
 
 function mirage_kv_output(&$rrd_update_array) {
+    global $config, $debug;
     $count_updates_processed = 0;
 	// Fetch Mirage configuration options relevant to KV output
     $mirage_rotation = read_config_option('mirage_rotation');
@@ -75,9 +76,7 @@ function mirage_kv_output(&$rrd_update_array) {
     if($mirage_log_filename=='') $mirage_log_filename='mirage_poller_output.log';
 
     //check if path is available
-    if(file_exists($mirage_log_path)) {
-        cacti_log("[mirage] [ERROR] path does not exist: $mirage_log_path");
-    } else {
+    if(!file_exists($mirage_log_path)) {
         if(mkdir($mirage_log_path,0770,true)) {
             cacti_log("[mirage] [WARNING] created new path: $mirage_log_path");
         } else {
