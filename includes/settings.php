@@ -41,8 +41,8 @@ function mirage_config_settings () {
 			'method' => 'spacer',
 			),
 		'mirage_log_type' => array(
-			'friendly_name' => 'Mirage output log file type',
-			'description' => 'This is the output log file type',
+			'friendly_name' => 'Mirage output format',
+			'description' => 'This is the output format in the log file',
 			'method' => 'drop_array',
 			'array' => array("kv" => "logfile (kv pairs)"),
 			'default' => "kv"
