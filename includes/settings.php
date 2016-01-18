@@ -75,7 +75,9 @@ function mirage_config_settings () {
 		'mirage_rotation' => array(
 			'friendly_name' => 'Enable file rotation',
 			'description' => 'Checking this box will enable file rotation. (default: ON)',
-			'method' => 'checkbox',
+			'method' => 'drop_array',
+            'array' => array("on" => "Turn On - Log Rotation (Default)",
+                             "off" => "Turn Off"),
 			'default' => 'on'
 			),
 		'mirage_rotation_size' => array(
