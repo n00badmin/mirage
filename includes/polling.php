@@ -27,6 +27,7 @@ function mirage_poller_output ($rrd_update_array) {
     /* Interception of poller_output via $rrd_update_array Array variable */
 	global $config, $debug;
 	//include_once($config['base_path'] . '/plugins/mirage/mirage_functions.php');
+    //TODO: make this a config setting
     $mirage_log = $config['base_path'] . '/log/mirage.log';
 
     /* manage mirage log file rotation */
