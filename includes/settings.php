@@ -44,8 +44,8 @@ function mirage_config_settings () {
 			'friendly_name' => 'Mirage output log file type',
 			'description' => 'This is the output log file type',
 			'method' => 'drop_array',
-			'array' => array("0" => "logfile (*.log)"),
-			'default' => 0
+			'array' => array("kv" => "logfile (kv pairs)"),
+			'default' => "kv"
 			),	
 		'mirage_log_path' => array(
 			'friendly_name' => 'Mirage output path',
@@ -56,16 +56,16 @@ function mirage_config_settings () {
 			),
 		'mirage_log_filename' => array(
 			'friendly_name' => 'Mirage log filename',
-			'description' => 'This is the filename which will contain the RRD values in Key-Value (KV) format. NOTE: Ommit the extension.',
+			'description' => 'This is the filename which will contain the Poller Output data. (ie: mirage_poller_output.log)',
 			'method' => 'textbox',
-			'default' => 'mirage_poller_output',
+			'default' => 'mirage_poller_output.log',
 			'max_length' => 255
 			),
 		'mirage_hostname_filename' => array(
 			'friendly_name' => 'Mirage hostname filename',
-			'description' => 'This is the filename which will contain the hostnames details in Key-Value (KV) format. NOTE: Ommit the extension.',
+			'description' => 'This is the filename which will contain the hostnames details data. (ie: mirage_hostname_output.log)',
 			'method' => 'textbox',
-			'default' => 'mirage_hostname',
+			'default' => 'mirage_hostname_output.log',
 			'max_length' => 255
 			),
 		'mirage_rotation_header' => array(	
@@ -74,19 +74,19 @@ function mirage_config_settings () {
 			),
 		'mirage_rotation' => array(
 			'friendly_name' => 'Enable file rotation',
-			'description' => 'Checking this box will enable file rotation.',
+			'description' => 'Checking this box will enable file rotation. (default: ON)',
 			'method' => 'checkbox',
 			'default' => 'on'
 			),
 		'mirage_rotation_size' => array(
 			'friendly_name' => 'File rotation max file size',
-			'description' => 'Set the max file size in bytes (default: 104857600 bytes).',
+			'description' => 'Set the max file size in bytes. (default: 104857600 bytes)',
 			'method' => 'textbox',
 			'default' => '104857600'
 			),
 		'mirage_rotation_files' => array(
 			'friendly_name' => 'Number of files to rotate',
-			'description' => 'Set the number of files to rotate',
+			'description' => 'Set the number of files to rotate. (default: 5)',
 			'method' => 'textbox',
 			'default' => '5'
 			),
