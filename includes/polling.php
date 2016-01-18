@@ -27,25 +27,23 @@ function mirage_poller_output ($rrd_update_array) {
     /* Interception of poller_output via $rrd_update_array Array variable */
 	global $config, $debug;
 	//include_once($config['base_path'] . '/plugins/mirage/mirage_functions.php');
-    //TODO: make this a config setting
+    $time_start = microtime(true);
     
-	// log filetype setting
-	if(read_config_option('mirage_log_type') == '0') {
-		$log_filetype = ".log";
-	} else {
-		// default to .log if not set in settings
-		$log_filetype = ".log"; 
-	}
-	
     $mirage_log_type = read_config_option('mirage_log_type');
-
+    if($mirage_log_type=='') $mirage_log_type='kv';
+    cacti_log("[mirage] output method: ".$mirage_log_type);
     if($mirage_log_type == 'kv') {
         mirage_kv_output($rrd_update_array);
     }
+
+    $time_end = microtime(true);
+    $time = $time_end - $time_start;
+    cacti_log("[mirage] processing completed in ".round($time,3)." seconds");
     return $rrd_update_array;
 }
 
 function mirage_kv_output(&$rrd_update_array) {
+    $count_updates_processed = 0;
 	/* mirage rotation setting */
 	$log_rotation = FALSE;
 	if(read_config_option('mirage_rotation') == 'on') {
@@ -99,11 +97,12 @@ function mirage_kv_output(&$rrd_update_array) {
 				$filedata .= 'rrd_name="'.$rrd_name.'" ';
                 //finalize each line and get ready for the next RRD update line
 				$filedata .= 'rrd_value="'.$rrd_value."\"\n";
+                $count_updates_processed++;
 			}
 		}
 		file_put_contents($mirage_log,$filedata,FILE_APPEND);
 	}
-	
+	cacti_log("[mirage] kv output processed $count_updates_processed updates");
 	return $rrd_update_array;
 }
 
