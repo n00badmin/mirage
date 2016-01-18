@@ -23,39 +23,13 @@
  +-------------------------------------------------------------------------+
 */
 
-function plugin_mirage_install () {
+function mirage_show_tab () {
 	global $config;
-	api_plugin_register_hook('mirage', 'poller_output', 'mirage_poller_output', 'includes/polling.php');
-	api_plugin_register_hook('mirage', 'config_settings', 'mirage_config_settings', 'includes/settings.php');
-	api_plugin_register_hook('mirage', 'top_graph_header_tabs', 'mirage_show_tab', 'includes/tab.php');
-	//api_plugin_register_hook('mirage', 'api_device_save', 'mirage_api_device_save', 'setup.php');
-	//include_once($config['base_path'] . '/plugins/mirage/includes/database.php');
-	//mirage_setup_database();
-}
+	if (api_user_realm_auth('mirage_graph.php')) {
+		$cp = false;
+		if (basename($_SERVER['PHP_SELF']) == 'mirage_graph.php')
+			$cp = true;
 
-function plugin_mirage_uninstall () {
-	// Do any extra Uninstall stuff here
+		print '<a href="' . $config['url_path'] . 'plugins/mirage/mirage_graph.php"><img src="' . $config['url_path'] . 'plugins/mirage/images/tab_mirage' . ($cp ? '_down': '') . '.gif" alt="mirage" align="absmiddle" border="0"></a>';
 	}
-
-function plugin_mirage_check_config () {
-	// Here we will check to ensure everything is configured
-	return true;
 }
-
-function mirage_version () {
-	return plugin_mirage_version();
-}
-
-function plugin_mirage_version () {
-	return array(
-			'name'		=> 'mirage',
-			'version' 	=> '1.0',
-			'longname'	=> 'Mirage',
-			'author'	=> 'Matthew Modestino, Patrick Best, Philippe Tang, Menno Vanderlist',
-			'homepage'	=> 'http://docs.cacti.net/plugin:mirage',
-			'email'	=> 'xxx@gmail.com',
-			'url'		=> 'http://docs.cacti.net/plugin:mirage'
-			);
-}
-
-?>
