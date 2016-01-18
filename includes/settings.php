@@ -2,7 +2,7 @@
 /*
  ex: set tabstop=4 shiftwidth=4 autoindent:
  +-------------------------------------------------------------------------+
- | Copyright (C) 2016 Matthew Modestino, Phillipe Tang                     |
+ | Copyright (C) 2016 Matthew Modestino, Philippe Tang, Menno Vanderlist   |
  |                                                                         |
  | This program is free software; you can redistribute it and/or           |
  | modify it under the terms of the GNU General Public License             |
