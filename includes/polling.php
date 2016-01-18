@@ -29,13 +29,17 @@ function mirage_poller_output ($rrd_update_array) {
 	//include_once($config['base_path'] . '/plugins/mirage/mirage_functions.php');
     $time_start = microtime(true);
     
+    // Get Mirage Method
     $mirage_log_type = read_config_option('mirage_log_type');
     if($mirage_log_type=='') $mirage_log_type='kv';
     cacti_log("[mirage] output method: ".$mirage_log_type);
+
+    // Execute Mirage Method
     if($mirage_log_type == 'kv') {
         mirage_kv_output($rrd_update_array);
     }
 
+    // End Mirage and log performance
     $time_end = microtime(true);
     $time = $time_end - $time_start;
     cacti_log("[mirage] processing completed in ".round($time,3)." seconds");
@@ -44,23 +48,51 @@ function mirage_poller_output ($rrd_update_array) {
 
 function mirage_kv_output(&$rrd_update_array) {
     $count_updates_processed = 0;
-	/* mirage rotation setting */
-	$log_rotation = FALSE;
-	if(read_config_option('mirage_rotation') == 'on') {
-		$log_rotation = TRUE;
-		$log_rotation_size = read_config_option('mirage_rotation_size');
-		$log_rotation_n = read_config_option('mirage_rotation_files');
-	}
-	
-	/* file path + filename */
-	if(read_config_option('mirage_log_path') != '' && read_config_option('mirage_log_filename') != '' && read_config_option('mirage_log_type') != '') {
-		$mirage_log_path = read_config_option('mirage_log_path');
-		$mirage_log_filename = read_config_option('mirage_log_filename');
-		$mirage_log = $mirage_log_path . $mirage_log_filename;
-	} else {
-		// default if not set in settings
-		$mirage_log = $config['base_path'] . '/log/mirage_poller_output.log';
-	}
+	// Fetch Mirage configuration options relevant to KV output
+    $mirage_rotation = read_config_option('mirage_rotation');
+    $mirage_rotation_size = read_config_option('mirage_rotation_size');
+    $mirage_rotation_files = read_config_option('mirage_rotation_files');
+    $mirage_log_path = read_config_option('mirage_log_path');
+    $mirage_log_filename = read_config_option('mirage_log_filename');
+
+    // Is log file rotation enabled?
+	if($mirage_rotation == 'on' || $mirage_rotation == '') {
+        $mirage_rotation = true;
+        cacti_log("[mirage] mirage_rotation=on");
+    } else {
+        $mirage_rotation = false;
+        cacti_log("[mirage] mirage_rotation=off");
+    }
+
+    // Set log file rotation defaults (only relevant if enabled)
+    if($mirage_rotation_size=='') $mirage_rotation_size=104857600;
+    if($mirage_rotation_files=='') $mirage_rotation_files=5;
+    if($mirage_rotation) cacti_log("[mirage] rotation size=$mirage_rotation_size files=$mirage_rotation_files");
+    
+    // Set log file defaults
+    if($mirage_log_path=='') $mirage_log_path=$config['base_path'] . '/log/';
+    if(substr($mirage_log_path,-1)!='/') $mirage_log_path .= '/';
+    if($mirage_log_filename=='') $mirage_log_filename='mirage_poller_output.log';
+
+    //check if path is available
+    if(file_exists($mirage_log_path)) {
+        cacti_log("[mirage] [ERROR] path does not exist: $mirage_log_path");
+    } else {
+        if(mkdir($mirage_log_path,0770,true)) {
+            cacti_log("[mirage] [WARNING] created new path: $mirage_log_path");
+        } else {
+            cacti_log("[mirage] [ERROR] failed to create log path: $mirage_log_path");
+            return;
+        }
+    }
+
+    // Set log file name
+    $mirage_log = $mirage_log_path.$mirage_log_filename;
+    cacti_log("[mirage] logfile='$mirage_log'");
+    if(!touch($mirage_log)) {
+        cacti_log("[mirage] [ERROR] failed to write to log file: $mirage_log");
+        return;
+    }
 	
     /* manage mirage log file rotation */
 	/*
