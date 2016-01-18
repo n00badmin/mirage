@@ -92,6 +92,15 @@ function mirage_config_settings () {
 			'method' => 'textbox',
 			'default' => '5'
 			),
+        'mirage_debug_header' => array(
+            'friendly_name' => 'Mirage Debug',
+            'method' => 'spacer',
+            ),
+        'mirage_debug' => array(
+            'friendly_name' => 'Enable Mirage Debug',
+            'description' => 'debug logs outputted into cacti.log',
+            'method' => 'checkbox'
+            ),
 		);
 }
 

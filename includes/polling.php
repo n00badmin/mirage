@@ -22,17 +22,27 @@
  | http://www.cacti.net/                                                   |
  +-------------------------------------------------------------------------+
 */
+$mirage_debug = false;
+
+function mirage_log($log) {
+    global $mirage_debug;
+    if($mirage_debug) cacti_log($log);
+}
 
 function mirage_poller_output ($rrd_update_array) {
     /* Interception of poller_output via $rrd_update_array Array variable */
-	global $config, $debug;
+	global $config, $debug, $mirage_debug;
+    cacti_log("[mirage] debug=$debug");
 	//include_once($config['base_path'] . '/plugins/mirage/mirage_functions.php');
     $time_start = microtime(true);
+
+    // Logging enabled?
+    if(read_config_option('mirage_debug')!='') $mirage_debug=true;
     
     // Get Mirage Method
     $mirage_log_type = read_config_option('mirage_log_type');
     if($mirage_log_type=='') $mirage_log_type='kv';
-    cacti_log("[mirage] output method: ".$mirage_log_type);
+    mirage_log("[mirage] output method: ".$mirage_log_type);
 
     // Execute Mirage Method
     if($mirage_log_type == 'kv') {
@@ -42,7 +52,7 @@ function mirage_poller_output ($rrd_update_array) {
     // End Mirage and log performance
     $time_end = microtime(true);
     $time = $time_end - $time_start;
-    cacti_log("[mirage] processing completed in ".round($time,3)." seconds");
+    mirage_log("[mirage] processing completed in ".round($time,3)." seconds");
     return $rrd_update_array;
 }
 
@@ -59,16 +69,16 @@ function mirage_kv_output(&$rrd_update_array) {
     // Is log file rotation enabled?
 	if($mirage_rotation == 'on' || $mirage_rotation == '') {
         $mirage_rotation = true;
-        cacti_log("[mirage] mirage_rotation=on");
+        mirage_log("[mirage] mirage_rotation=on");
     } else {
         $mirage_rotation = false;
-        cacti_log("[mirage] mirage_rotation=off");
+        mirage_log("[mirage] mirage_rotation=off");
     }
 
     // Set log file rotation defaults (only relevant if enabled)
     if($mirage_rotation_size=='') $mirage_rotation_size=104857600;
     if($mirage_rotation_files=='') $mirage_rotation_files=5;
-    if($mirage_rotation) cacti_log("[mirage] rotation size=$mirage_rotation_size files=$mirage_rotation_files");
+    if($mirage_rotation) mirage_log("[mirage] rotation size=$mirage_rotation_size files=$mirage_rotation_files");
     
     // Set log file defaults
     if($mirage_log_path=='') $mirage_log_path=$config['base_path'] . '/log/';
@@ -78,18 +88,18 @@ function mirage_kv_output(&$rrd_update_array) {
     //check if path is available
     if(!file_exists($mirage_log_path)) {
         if(mkdir($mirage_log_path,0770,true)) {
-            cacti_log("[mirage] [WARNING] created new path: $mirage_log_path");
+            mirage_log("[mirage] [WARNING] created new path: $mirage_log_path");
         } else {
-            cacti_log("[mirage] [ERROR] failed to create log path: $mirage_log_path");
+            mirage_log("[mirage] [ERROR] failed to create log path: $mirage_log_path");
             return;
         }
     }
 
     // Set log file name
     $mirage_log = $mirage_log_path.$mirage_log_filename;
-    cacti_log("[mirage] logfile='$mirage_log'");
+    mirage_log("[mirage] logfile='$mirage_log'");
     if(!touch($mirage_log)) {
-        cacti_log("[mirage] [ERROR] failed to write to log file: $mirage_log");
+        mirage_log("[mirage] [ERROR] failed to write to log file: $mirage_log");
         return;
     }
 	
@@ -133,7 +143,7 @@ function mirage_kv_output(&$rrd_update_array) {
 		}
 		file_put_contents($mirage_log,$filedata,FILE_APPEND);
 	}
-	cacti_log("[mirage] kv output processed $count_updates_processed updates");
+	mirage_log("[mirage] kv output processed $count_updates_processed updates");
 	return $rrd_update_array;
 }
 
