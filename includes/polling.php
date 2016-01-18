@@ -32,7 +32,6 @@ function mirage_log($log) {
 function mirage_poller_output ($rrd_update_array) {
     /* Interception of poller_output via $rrd_update_array Array variable */
 	global $config, $debug, $mirage_debug;
-    cacti_log("[mirage] debug=$debug");
 	//include_once($config['base_path'] . '/plugins/mirage/mirage_functions.php');
     $time_start = microtime(true);
 
