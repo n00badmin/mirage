@@ -27,6 +27,16 @@ function mirage_poller_output ($rrd_update_array) {
     /* Interception of poller_output via $rrd_update_array Array variable */
 	global $config, $debug;
 	//include_once($config['base_path'] . '/plugins/mirage/mirage_functions.php');
+    $mirage_log = $config['base_path'] . '/log/mirage.log';
+
+    /* manage mirage log file rotation */
+    //if(filesize($mirage_log)>104857600) {
+    if(filesize($mirage_log)>512) {
+        rename($mirage_log . '.3',$mirage_log .'.4');
+        rename($mirage_log . '.2',$mirage_log .'.3');
+        rename($mirage_log . '.1',$mirage_log .'.2');
+        rename($mirage_log,$mirage_log .'.1');
+    }
 	
 	/* loop through rrd_update_array */
 	foreach($rrd_update_array as $rrd_file=>$rrd_data) {
@@ -45,7 +55,7 @@ function mirage_poller_output ($rrd_update_array) {
 				$filedata .= 'rrd_value="'.$rrd_value."\"\n";
 			}
 		}
-		file_put_contents("/tmp/cacti.log",$filedata,FILE_APPEND);
+		file_put_contents($mirage_log,$filedata,FILE_APPEND);
 	}
 	
     // Orignal code to generate mirror table in mysql.  Removed for file updating
