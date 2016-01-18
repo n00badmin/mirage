@@ -26,8 +26,6 @@
 function plugin_mirage_install () {
 	global $config;
 	api_plugin_register_hook('mirage', 'poller_output', 'mirage_poller_output', 'includes/polling.php');
-	api_plugin_register_hook('mirage', 'config_settings', 'mirage_config_settings', 'includes/settings.php');
-	api_plugin_register_hook('mirage', 'top_graph_header_tabs', 'mirage_show_tab', 'includes/tab.php');
 	//api_plugin_register_hook('mirage', 'api_device_save', 'mirage_api_device_save', 'setup.php');
 	//include_once($config['base_path'] . '/plugins/mirage/includes/database.php');
 	//mirage_setup_database();
@@ -35,7 +33,7 @@ function plugin_mirage_install () {
 
 function plugin_mirage_uninstall () {
 	// Do any extra Uninstall stuff here
-	}
+}
 
 function plugin_mirage_check_config () {
 	// Here we will check to ensure everything is configured
