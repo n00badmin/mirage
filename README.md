@@ -1,2 +1,2 @@
 # mirage
-Mirage is a plugin for Cacti, designed to mirror polling data to file, allowing ingestion of SNMP data into Splunk. 
+Mirage is a plugin for Cacti, designed to intercept and mirror SNMP polling data, allowing ingestion into Splunk. 
