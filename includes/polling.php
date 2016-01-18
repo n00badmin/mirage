@@ -30,8 +30,7 @@ function mirage_poller_output ($rrd_update_array) {
     $mirage_log = $config['base_path'] . '/log/mirage.log';
 
     /* manage mirage log file rotation */
-    //if(filesize($mirage_log)>104857600) {
-    if(filesize($mirage_log)>512) {
+    if(filesize($mirage_log)>104857600) {
         rename($mirage_log . '.3',$mirage_log .'.4');
         rename($mirage_log . '.2',$mirage_log .'.3');
         rename($mirage_log . '.1',$mirage_log .'.2');
