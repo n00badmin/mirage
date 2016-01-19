@@ -35,4 +35,4 @@ Default destination for log files is CACTI_HOME/log/mirage.log
  * Feel free to submit any bug related issue on the Git.
 
 ## Copyright
- * Copyright 2016 Matthew Modestino, Philippe Tang, Menno Vanderlist
+Copyright 2016 Matthew Modestino, Philippe Tang, Menno Vanderlist
