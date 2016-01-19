@@ -105,9 +105,11 @@ function mirage_kv_output(&$rrd_update_array) {
 		2 mirage.log2 --> mirage.log3
 		3 mirage.log3 --> mirage.log4
 	*/ 
-	if($log_rotation) {
-		if(filesize($mirage_log)>$log_rotation_size) {
-			for($i=$log_rotation_n-1 ; $i>=0; $i--) {
+	if($mirage_rotation) {
+        mirage_log('[mirage] log rotation enabled');
+		if(filesize($mirage_log)>$mirage_rotation_size) {
+            mirage_log('[mirage] log rotation needed');
+			for($i=$mirage_rotation_files-1 ; $i>=0; $i--) {
 				if($i>0) {
 					rename($mirage_log.'.'.$i,$mirage_log.'.'.($i+1));
 				} else {
