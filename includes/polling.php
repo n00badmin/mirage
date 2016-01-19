@@ -15,6 +15,7 @@
  | GNU General Public License for more details.                            |
  +-------------------------------------------------------------------------+
  | https://github.com/n00badmin/mirage                                     |
+ | http://docs.cacti.net/plugin:mirage                                     |
  +-------------------------------------------------------------------------+
 */
 $mirage_debug = false;
@@ -104,6 +105,7 @@ function mirage_kv_output(&$rrd_update_array) {
 		1 mirage.log1 --> mirage.log2
 		2 mirage.log2 --> mirage.log3
 		3 mirage.log3 --> mirage.log4
+		4 mirage.log4 --> mirage.log5
 	*/ 
 	if($mirage_rotation) {
         mirage_log('[mirage] log rotation enabled');

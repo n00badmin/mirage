@@ -15,19 +15,14 @@
  | GNU General Public License for more details.                            |
  +-------------------------------------------------------------------------+
  | https://github.com/n00badmin/mirage                                     |
+ | http://docs.cacti.net/plugin:mirage                                     |
  +-------------------------------------------------------------------------+
 */
 
 function mirage_config_settings () {
 	global $tabs, $settings, $item_rows, $config;
 	if (isset($_SERVER['PHP_SELF']) && basename($_SERVER['PHP_SELF']) != 'settings.php') return;
-	/*
-	File Output Path (relative to cacti) = /log/mirage.log
-	Max file size in bytes = 104857600
-	Files to rotate = 5
-	*/
-	//include_once("./plugins/mirage/mirage_functions.php");
-	//$mirage_log_path = $config['base_path'];
+
 	$mirage_log_path = $config['base_path'] . '/log/';
 	$tabs['mirage'] = 'Mirage';
 	$settings['mirage'] = array(

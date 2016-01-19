@@ -15,6 +15,7 @@
  | GNU General Public License for more details.                            |
  +-------------------------------------------------------------------------+
  | https://github.com/n00badmin/mirage                                     |
+ | http://docs.cacti.net/plugin:mirage                                     |
  +-------------------------------------------------------------------------+
 */
 
@@ -22,14 +23,6 @@ function plugin_mirage_install () {
 	global $config;
 	api_plugin_register_hook('mirage', 'poller_output', 'mirage_poller_output', 'includes/polling.php');
 	api_plugin_register_hook('mirage', 'config_settings', 'mirage_config_settings', 'includes/settings.php');
-	//api_plugin_register_hook('mirage', 'top_header_tabs', 'mirage_show_tab', 'includes/tab.php');
-	//api_plugin_register_hook('mirage', 'top_graph_header_tabs', 'mirage_show_tab', 'includes/tab.php');
-
-	//api_plugin_register_realm('mirage', 'mirage_graph.php,graph_mirage.php', 'Plugin -> View Mirage', 1);
-
-	//api_plugin_register_hook('mirage', 'api_device_save', 'mirage_api_device_save', 'setup.php');
-	//include_once($config['base_path'] . '/plugins/mirage/includes/database.php');
-	//mirage_setup_database();
 }
 
 function plugin_mirage_uninstall () {
@@ -48,11 +41,11 @@ function mirage_version () {
 function plugin_mirage_version () {
 	return array(
 			'name'		=> 'mirage',
-			'version' 	=> '1.1',
-			'longname'	=> 'Mirage',
-			'author'	=> 'Matthew Modestino, Patrick Best, Philippe Tang, Menno Vanderlist',
+			'version' 	=> '1.1.0',
+			'longname'	=> 'SNMP Poller Export',
+			'author'	=> 'Matthew Modestino, Philippe Tang, Menno Vanderlist',
 			'homepage'	=> 'http://docs.cacti.net/plugin:mirage',
-			'email'	=> 'xxx@gmail.com',
+			'email'		=> 'in.the.n00b.lab@gmail.com',
 			'url'		=> 'http://docs.cacti.net/plugin:mirage'
 			);
 }
