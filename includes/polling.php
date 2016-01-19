@@ -84,7 +84,7 @@ function mirage_kv_output(&$rrd_update_array) {
         if(mkdir($mirage_log_path,0770,true)) {
             mirage_log("[mirage] [WARNING] created new path: $mirage_log_path");
         } else {
-            mirage_log("[mirage] [ERROR] failed to create log path: $mirage_log_path");
+            cacti_log("[mirage] [ERROR] failed to create log path: $mirage_log_path");
             return;
         }
     }
@@ -93,7 +93,7 @@ function mirage_kv_output(&$rrd_update_array) {
     $mirage_log = $mirage_log_path.$mirage_log_filename;
     mirage_log("[mirage] logfile='$mirage_log'");
     if(!touch($mirage_log)) {
-        mirage_log("[mirage] [ERROR] failed to write to log file: $mirage_log");
+        cacti_log("[mirage] [ERROR] failed to write to log file: $mirage_log");
         return;
     }
 	
