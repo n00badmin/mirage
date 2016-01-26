@@ -44,9 +44,9 @@ function plugin_mirage_version () {
 			'version' 	=> '1.1.0',
 			'longname'	=> 'SNMP Poller Export',
 			'author'	=> 'Matthew Modestino, Philippe Tang, Menno Vanderlist',
-			'homepage'	=> 'http://docs.cacti.net/plugin:mirage',
+			'homepage'	=> 'http://docs.cacti.net/userplugin:mirage',
 			'email'		=> 'in.the.n00b.lab@gmail.com',
-			'url'		=> 'http://docs.cacti.net/plugin:mirage'
+			'url'		=> 'http://docs.cacti.net/userplugin:mirage'
 			);
 }
 
