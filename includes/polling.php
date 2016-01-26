@@ -131,11 +131,11 @@ function mirage_kv_output(&$rrd_update_array) {
 			foreach($values as $rrd_name=>$rrd_value) {
                 //excluding RRD filename
 				//$filedata .= 'rrd="'.$rrd_file.'" ';
-				$filedata .= 'local_data_id="'.$local_data_id.'" ';
-				$filedata .= 'time="'.$time.'" ';
-				$filedata .= 'rrd_name="'.$rrd_name.'" ';
+				$filedata .= 'ldi="'.$local_data_id.'" ';
+				$filedata .= 't="'.$time.'" ';
+				$filedata .= 'rrdn="'.$rrd_name.'" ';
                 //finalize each line and get ready for the next RRD update line
-				$filedata .= 'rrd_value="'.$rrd_value."\"\n";
+				$filedata .= 'rrdv="'.$rrd_value."\"\n";
                 $count_updates_processed++;
 			}
 		}
