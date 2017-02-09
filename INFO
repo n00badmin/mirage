@@ -1,0 +1,8 @@
+[info]
+name = mirage
+version = 1.3.0
+longname = SNMP Poller Export
+author = Matthew Modestino, Philippe Tang, Menno Vanderlist
+email = in.the.n00b.lab@gmail.com
+homepage = http://docs.cacti.net/userplugin:mirage
+compat = 1.0.0
