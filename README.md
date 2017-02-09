@@ -4,7 +4,11 @@ Mirage is a Cacti plugin designed to mirror SNMP polling data to file, prior to 
 Default destination for log files is **CACTI_HOME/log/mirage.log**
 
 ##Current Release
- * Jan 29th, 2016: Version 1.2.0 
+ * Feb 9th, 2017: Version 1.3.0 
+
+##Release Notes
+ * 1.3.0: Provide compatibility support for Cacti 1.0
+ * 1.2.0: Release of Cacti Mirage Plugin
 
 ##Purpose
  * To enable Cacti Users to export their polling data into other systems prior to writing RRD files.
